@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F2F2F2"
+    android:orientation="vertical"
+    android:padding="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/car_name"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:text="차이름"
+                android:paddingLeft="20sp"
+                android:gravity="center_vertical"/>
+            <TextView
+                android:id="@+id/car_company"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:text="제조회사"
+                android:paddingLeft="20sp"
+                android:gravity="center_vertical"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:padding="5sp">
+            <Button
+                android:id="@+id/car_selectable_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#4AB8C6"
+                android:layout_weight="0.5"
+                android:layout_marginLeft="10sp"
+                android:text="선택" />
+            <Button
+                android:id="@+id/car_spec_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#4AB8C6"
+                android:layout_weight="0.5"
+                android:layout_marginLeft="10sp"
+                android:text="스펙확인" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
+
