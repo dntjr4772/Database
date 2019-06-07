@@ -1,0 +1,49 @@
+Ubuntu Node OS image for Amazon Elastic Container Service for Kubernetes (EKS)
+==============================================================================
+
+This image is customized specifically for the EKS service and is not
+intended as a general OS image.
+
+Customization is done during first boot and is driven by the script
+/var/lib/cloud/scripts/per-instance/00-EKS-config.sh.  This is executed
+by cloud-init and output can be seen in /var/lib/cloud-init-output.sh.
+The script will determine the cluster to join based on the instance
+tag “Key=kubernetes.io/cluster/<cluster_name>, Value=owned" which
+should be associated with the instance from the autoscaling group.
+See the sample CloudFormation template in this same directory named
+amazon-eks-ubuntu-nodegroup.yaml.
+
+How to customize set up
+-----------------------
+Any user-data passed to the instance will run after the in-image
+configuration (/var/lib/cloud/scripts/per-instance/00-EKS-config.sh).
+If you need to override the in-image configuration entirely you may
+use cloud-init’s runcmd[1] to delete the in-image configuration and
+use cloud-init’s write_files[2] to substitute your own configuration
+script in the same directory.
+
+Customization example
+---------------------
+Here we have a customization example with complete replacement of the
+setup script.  The ‘runcmd’ stanza would be omitted if the goal
+is to augment the existing setup rather than replace it entirely.
+The following would be added to the CloudFormation nodegroup template
+in the instance userdata property[3]:
+
+#cloud-config
+# Remove the built-in customization if you want/need to replace it completely
+runcmd:
+ - [ cloud-init-per, once, rm, -f, /var/lib/cloud/scripts/per-instance/00-EKS-config.sh ]
+# Add your own customization
+write_files:
+- path: /var/lib/cloud/scripts/per-instance/01-EKS-custom.sh
+  permissions: 755
+  owner: root:root
+  content: |
+      #!/bin/bash -eux
+      ## Custom EKS setup likely using 00-EKS-config.sh as a guide
+
+
+[1] http://cloudinit.readthedocs.io/en/latest/topics/examples.html#run-commands-on-first-boot
+[2] http://cloudinit.readthedocs.io/en/latest/topics/examples.html#writing-out-arbitrary-files 
+[3] https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/quickref-general.html#scenario-userdata-base64
