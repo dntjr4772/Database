@@ -255,15 +255,33 @@
                     android:textAlignment="center"
                     android:gravity="center_vertical"/>
             </LinearLayout>
-
-            <Button
-                android:id="@+id/submit"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.11"
-                android:text="조회하기"
-                android:background="#6ABCCC"
-                />
+                android:orientation="horizontal"
+                android:weightSum="1"
+                >
+                <Button
+                    android:id="@+id/submit"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:text="조회하기"
+                    android:layout_margin="5sp"
+                    android:background="#6ABCCC"
+                    />
+                <Button
+                    android:id="@+id/zzim"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:text="찜목록 조회"
+                    android:layout_margin="5sp"
+                    android:background="#6ABCCC"
+                    />
+            </LinearLayout>
+
 
         </LinearLayout>
     </RelativeLayout>

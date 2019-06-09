@@ -15,7 +15,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.8"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:weightSum="1">
             <LinearLayout
@@ -25,27 +25,27 @@
                 android:weightSum="1"
                 android:orientation="horizontal">
                 <TextView
-                android:id="@+id/car_name"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.33"
-                android:text="차이름"
-                android:paddingLeft="20sp"
-                android:gravity="center_vertical"/>
-                <TextView
-                    android:id="@+id/car_type"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.33"
-                    android:text="차타입"
-                    android:paddingLeft="20sp"
-                    android:gravity="center_vertical"/>
-                <TextView
-                    android:id="@+id/car_num"
+                    android:id="@+id/zzim_car_num"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.33"
                     android:text="차번호"
+                    android:paddingLeft="20sp"
+                    android:gravity="center_vertical"/>
+                <TextView
+                    android:id="@+id/zzim_car_model"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.33"
+                    android:text="차이름"
+                    android:paddingLeft="20sp"
+                    android:gravity="center_vertical"/>
+                <TextView
+                    android:id="@+id/zzim_car_type"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.33"
+                    android:text="차타입"
                     android:paddingLeft="20sp"
                     android:gravity="center_vertical"/>
 
@@ -60,10 +60,10 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.25"
-                    android:text="운행거리"
+                    android:text="운행거리 : "
                     android:gravity="center_vertical"/>
                 <TextView
-                    android:id="@+id/car_driven"
+                    android:id="@+id/zzim_car_driven"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.25"
@@ -74,10 +74,10 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.25"
-                    android:text="업체"
+                    android:text="업체 :"
                     android:gravity="center_vertical"/>
                 <TextView
-                    android:id="@+id/car_company"
+                    android:id="@+id/zzim_car_company"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.25"
@@ -98,7 +98,7 @@
                     android:text="차량 위치"
                     android:gravity="center_vertical"/>
                 <TextView
-                    android:id="@+id/car_location"
+                    android:id="@+id/zzim_car_location"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.8"
@@ -108,20 +108,6 @@
                     />
             </LinearLayout>
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.2"
-            android:orientation="horizontal"
-            android:weightSum="1"
-            android:padding="5sp">
-            <Button
-                android:id="@+id/car_selected_btn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#4AB8C6"
-                android:text="선택" />
         </LinearLayout>
 
     </LinearLayout>

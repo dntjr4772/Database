@@ -33,5 +33,8 @@
         <activity
             android:name=".CarDetailActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ZzimActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 </manifest>

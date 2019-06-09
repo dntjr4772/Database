@@ -15,7 +15,7 @@ try {
     $db = new PDO($hostname, $username, $password);
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $query = "SELECT car.model,car.company FROM car WHERE type= ? AND passengers=?";
+    $query = "SELECT car.model,car.company, car.carcol FROM car WHERE type= ? AND passengers=? group by car.model, car.company, car.carcol";
 
     $stmt = $db->prepare($query);
     $stmt->execute(array($cartype, $people));

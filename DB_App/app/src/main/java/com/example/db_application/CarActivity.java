@@ -94,7 +94,8 @@ public class CarActivity  extends AppCompatActivity {
                             for(int i=0;i<jobj.length();i++){
                                 String name=((JSONArray)jobj.get(i)).get(0).toString();
                                 String company=((JSONArray)jobj.get(i)).get(1).toString();
-                                CarSelectable c=new CarSelectable(name,company);
+                                String carcol=((JSONArray)jobj.get(i)).get(2).toString();
+                                CarSelectable c=new CarSelectable(name,company,carcol);
                                 al_carselectable.add(c);
                             }
 

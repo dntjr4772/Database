@@ -15,8 +15,8 @@ try {
     $db = new PDO($hostname, $username, $password);
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $query = "SELECT rentcar.car_num, rentcar.model,rental_place.address,company.name,rentcar.distance_driven FROM rental_place, car,company,rentcar WHERE car.model= ? AND car.model=rentcar.model AND rentcar.company=company.id AND rental_place.name=rentcar.location";
-
+    //$query = "SELECT rentcar.car_num, rentcar.model,rental_place.address,company.name,rentcar.distance_driven FROM rental_place, car,company,rentcar WHERE car.model= ? AND car.model=rentcar.model AND rentcar.company=company.id AND rental_place.name=rentcar.location";
+    $query = "SELECT rentcar.car_num,rentcar.model,rentcar.location,company.name,rentcar.distance_driven,rentcar.type FROM db_project.rentcar as rentcar NATURAL JOIN db_project.company as company where rentcar.model=?";
     $stmt = $db->prepare($query);
     $stmt->execute(array($carname));
     $result = $stmt->fetchAll(PDO::FETCH_NUM);

@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     public static int time;
     public static int kilo;
     public static ArrayList<CarType> cartype_al=new ArrayList<>();
+    public static ArrayList<zzim_list> zzim_al=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         Button time_btn=(Button)findViewById(R.id.time_btn);
         Button kilo_btn=(Button)findViewById(R.id.kilo_btn);
         Button submit_btn=(Button)findViewById(R.id.submit);
-
+        Button zzim_btn=(Button)findViewById(R.id.zzim);
         final EditText kilo_edit=(EditText)findViewById(R.id.kilo_edit);
         final TextView kilo_text=(TextView)findViewById(R.id.kilo_text);
         final TextView time_text=(TextView)findViewById(R.id.time_text);
@@ -114,8 +115,69 @@ public class MainActivity extends AppCompatActivity {
                 set_kilo_time(time, kilo);
             }
         });
+        zzim_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                get_zzim();
+            }
+        });
     }
+    public void get_zzim(){
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    zzim_al.clear();
+                    JSONObject jsonParam = new JSONObject();
 
+                    URL url = new URL("http://13.124.67.34/get_zzim_list.php");
+
+                    HttpURLConnection conn = set_Connect_info(url, jsonParam);
+                    if (conn.getResponseCode() == 200) {
+                        InputStream response = conn.getInputStream();
+                        String jsonReply = convertStreamToString(response);
+                        try {
+                            Log.d("test", jsonReply);
+                            if(jsonReply.equals("-1\n")){
+                                Log.d("error", "wishlist not found!");
+                            }else{
+                                JSONArray jobj=new JSONArray(jsonReply);
+                                for(int i=0;i<jobj.length();i++){
+                                    String company=((JSONArray)jobj.get(i)).get(0).toString();
+                                    String model=((JSONArray)jobj.get(i)).get(1).toString();
+                                    String location=((JSONArray)jobj.get(i)).get(2).toString();
+                                    String car_num=((JSONArray)jobj.get(i)).get(3).toString();
+                                    String type=((JSONArray)jobj.get(i)).get(4).toString();
+                                    String distance_driven=((JSONArray)jobj.get(i)).get(5).toString();
+                                    zzim_list z=new zzim_list( company, model, location, car_num ,  type,  distance_driven);
+                                    zzim_al.add(z);
+                                }
+                            }
+
+
+                            Intent intent = new Intent(getApplicationContext(), ZzimActivity.class);
+
+                            startActivityForResult(intent, 101);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Log.d("error", "Connect fail");
+                    }
+                    conn.disconnect();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
     public int calculate_time(String s_y,String s_m, String s_d, String s_h, String e_y, String e_m, String e_d, String e_h){
         int s_year=Integer.parseInt(s_y);
         int s_month=Integer.parseInt(s_m);

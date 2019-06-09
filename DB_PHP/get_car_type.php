@@ -11,6 +11,8 @@ try {
     $username="root";
     $password="12341234";
 
+
+
     $db = new PDO($hostname, $username, $password);
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

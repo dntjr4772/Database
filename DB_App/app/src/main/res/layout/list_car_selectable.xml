@@ -27,15 +27,31 @@
                 android:text="차이름"
                 android:paddingLeft="20sp"
                 android:gravity="center_vertical"/>
-            <TextView
-                android:id="@+id/car_company"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
-                android:text="제조회사"
-                android:paddingLeft="20sp"
-                android:gravity="center_vertical"
-                />
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/car_company"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:text="제조회사"
+                    android:paddingLeft="20sp"
+                    android:gravity="center_vertical"
+                    />
+                <TextView
+                    android:id="@+id/car_col"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:text="유종"
+                    android:paddingLeft="20sp"
+                    android:gravity="center_vertical"
+                    />
+            </LinearLayout>
+
         </LinearLayout>
         <LinearLayout
             android:layout_width="0dp"

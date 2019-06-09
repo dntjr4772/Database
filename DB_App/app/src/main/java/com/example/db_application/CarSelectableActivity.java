@@ -60,13 +60,13 @@ public class CarSelectableActivity  extends AppCompatActivity {
 
             TextView txt_car_name = (TextView) view.findViewById(R.id.car_name);
             TextView txt_car_company=(TextView)view.findViewById(R.id.car_company);
-
+            TextView txt_car_col=(TextView)view.findViewById(R.id.car_col);
             Button btn_select=(Button)view.findViewById(R.id.car_selectable_btn);
             Button btn_spec=(Button)view.findViewById(R.id.car_spec_btn);
 
             txt_car_name.setText(CarActivity.al_carselectable.get(i).name);
             txt_car_company.setText(CarActivity.al_carselectable.get(i).company);
-
+            txt_car_col.setText(CarActivity.al_carselectable.get(i).carcol);
             btn_select.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -106,8 +106,8 @@ public class CarSelectableActivity  extends AppCompatActivity {
                                 String location=((JSONArray)jobj.get(i)).get(2).toString();
                                 String company=((JSONArray)jobj.get(i)).get(3).toString();
                                 String driven=((JSONArray)jobj.get(i)).get(4).toString();
-
-                                CarSelected c=new CarSelected(car_num,name,location,company,driven);
+                                String type=((JSONArray)jobj.get(i)).get(5).toString();
+                                CarSelected c=new CarSelected(car_num,name,location,company,driven,type);
                                 al_carSelected.add(c);
                             }
 

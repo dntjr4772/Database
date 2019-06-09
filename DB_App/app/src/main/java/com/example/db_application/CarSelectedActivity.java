@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -60,7 +61,7 @@ public class CarSelectedActivity extends AppCompatActivity {
             TextView txt_car_company=(TextView)view.findViewById(R.id.car_company);
             TextView txt_car_driven=(TextView)view.findViewById(R.id.car_driven);
             TextView txt_car_location=(TextView)view.findViewById(R.id.car_location);
-
+            TextView txt_car_type=(TextView)view.findViewById(R.id.car_type);
             Button btn_select=(Button)view.findViewById(R.id.car_selected_btn);
 
             txt_car_num.setText(CarSelectableActivity.al_carSelected.get(i).car_num);
@@ -68,6 +69,7 @@ public class CarSelectedActivity extends AppCompatActivity {
             txt_car_company.setText(CarSelectableActivity.al_carSelected.get(i).company);
             txt_car_driven.setText(CarSelectableActivity.al_carSelected.get(i).driven);
             txt_car_location.setText(CarSelectableActivity.al_carSelected.get(i).location);
+            txt_car_type.setText(CarSelectableActivity.al_carSelected.get(i).type);
 
             btn_select.setOnClickListener(new View.OnClickListener(){
                 @Override
@@ -86,31 +88,30 @@ public class CarSelectedActivity extends AppCompatActivity {
                     JSONObject jsonParam = new JSONObject();
                     jsonParam.put("carname",CarSelectableActivity.al_carSelected.get(position).name);
 
-                    URL url = new URL("http://13.124.67.34/get_car_select.php");
+                    URL url = new URL("http://13.124.67.34/set_zzim_list.php");
 
                     HttpURLConnection conn = set_Connect_info(url, jsonParam);
                     if (conn.getResponseCode() == 200) {
                         InputStream response = conn.getInputStream();
                         String jsonReply = convertStreamToString(response);
-                        try {
-                            Log.d("test", jsonReply);
-                            JSONArray jobj=new JSONArray(jsonReply);
-                            for(int i=0;i<jobj.length();i++){
-                                String car_num=((JSONArray)jobj.get(i)).get(0).toString();
-                                String name=((JSONArray)jobj.get(i)).get(1).toString();
-                                String location=((JSONArray)jobj.get(i)).get(2).toString();
-                                String company=((JSONArray)jobj.get(i)).get(3).toString();
-                                String driven=((JSONArray)jobj.get(i)).get(4).toString();
+                        if(jsonReply.equals("1\n")){
+                            Log.d("success","wishlist create");
+                        }else{
+                            try {
+                                Log.d("test", jsonReply);
+                                JSONArray jobj=new JSONArray(jsonReply);
+                                for(int i=0;i<jobj.length();i++){
 
-                                CarSelected c=new CarSelected(car_num,name,location,company,driven);
+                                }
+
+                                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                startActivityForResult(intent, 101);
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
-
-                            Intent intent = new Intent(getApplicationContext(), CarSelectedActivity.class);
-                            startActivityForResult(intent, 101);
-
-                        } catch (Exception e) {
-                            e.printStackTrace();
                         }
+
                     } else {
                         Log.d("error", "Connect fail");
                     }
