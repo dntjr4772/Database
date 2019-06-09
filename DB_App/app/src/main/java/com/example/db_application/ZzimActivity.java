@@ -68,7 +68,10 @@ public class ZzimActivity  extends AppCompatActivity {
             txt_car_num.setText(MainActivity.zzim_al.get(i).car_num);
             txt_car_type.setText(MainActivity.zzim_al.get(i).type);
             txt_car_driven.setText(MainActivity.zzim_al.get(i).distance_driven);
-            txt_car_company.setText(MainActivity.zzim_al.get(i).company);
+            if(MainActivity.zzim_al.get(i).company.equals("0"))
+                txt_car_company.setText("쏘카");
+            if(MainActivity.zzim_al.get(i).company.equals("1"))
+                txt_car_company.setText("그린카");
             txt_car_location.setText(MainActivity.zzim_al.get(i).location);
 
             return view;

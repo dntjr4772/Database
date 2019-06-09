@@ -27,6 +27,7 @@ import static com.example.db_application.MainActivity.set_Connect_info;
 public class CarSelectableActivity  extends AppCompatActivity {
     static ArrayList<CarSelected> al_carSelected=new ArrayList<>();
     static ArrayList<CarDetail> al_carDetail=new ArrayList<>();
+    static ArrayList<String> al_price=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +71,7 @@ public class CarSelectableActivity  extends AppCompatActivity {
             btn_select.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
+                    get_car_price(i);
                     get_car_selected_list(i);
                 }
             });
@@ -107,11 +109,19 @@ public class CarSelectableActivity  extends AppCompatActivity {
                                 String company=((JSONArray)jobj.get(i)).get(3).toString();
                                 String driven=((JSONArray)jobj.get(i)).get(4).toString();
                                 String type=((JSONArray)jobj.get(i)).get(5).toString();
+
+                                if(company.equals("0"))
+                                    company="쏘카";
+                                else if(company.equals("1"))
+                                    company="그린카";
+
                                 CarSelected c=new CarSelected(car_num,name,location,company,driven,type);
+                                c.get_price(company);
                                 al_carSelected.add(c);
                             }
 
                             Intent intent = new Intent(getApplicationContext(), CarSelectedActivity.class);
+                            intent.putExtra("position",position);
                             startActivityForResult(intent, 101);
 
                         } catch (Exception e) {
@@ -133,7 +143,54 @@ public class CarSelectableActivity  extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+    public void get_car_price(final int position) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    al_price.clear();
+                    JSONObject jsonParam = new JSONObject();
+                    jsonParam.put("model",CarActivity.al_carselectable.get(position).name);
+                    jsonParam.put("carcol",CarActivity.al_carselectable.get(position).carcol);
 
+                    URL url = new URL("http://13.124.67.34/get_price_info.php");
+
+                    HttpURLConnection conn = set_Connect_info(url, jsonParam);
+                    if (conn.getResponseCode() == 200) {
+                        InputStream response = conn.getInputStream();
+                        String jsonReply = convertStreamToString(response);
+                        try {
+                            Log.d("test", jsonReply);
+                            JSONArray jobj=new JSONArray(jsonReply);
+                            for(int i=0;i<jobj.length();i++){
+                                String id=((JSONArray)jobj.get(i)).get(0).toString();
+                                String kilo=((JSONArray)jobj.get(i)).get(1).toString();
+                                String time=((JSONArray)jobj.get(i)).get(2).toString();
+                                al_price.add(id);
+                                al_price.add(kilo);
+                                al_price.add(time);
+
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        Log.d("error", "Connect fail");
+                    }
+                    conn.disconnect();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
     public void get_car_specification(final int position) {
         Thread thread = new Thread(new Runnable() {
             @Override

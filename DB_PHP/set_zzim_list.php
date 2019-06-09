@@ -23,23 +23,29 @@ try {
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_NUM);
     if($result==null){
-        $model=$json_data['model'];
-        $query="Create view WishList as SELECT company.name,rentcar.model,rentcar.location,rentcar.car_num,rentcar.type,rentcar.distance_driven FROM db_project.rentcar as rentcar NATURAL JOIN db_project.company as company where rentcar.model=?;";
-        $stmt->execute(array($model));
-        $result = $stmt->fetchAll(PDO::FETCH_NUM);
-        echo 1;
-    }else{
-        $model=$json_data['model'];
-        $location=$json_data['location'];
-        $num=$json_data['num'];
-        $type=$json_data['type'];
-        $distance=$json_data['distance'];
+        $model2=$json_data['model'];
+        $carcol2=$json_data['carcol'];
 
-        $query = "Insert into WishList values(0,K5,매탄권선역,12허4855,중형,9920);";
-        $stmt = $db->prepare($query);
-        $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_NUM);
-        echo json_encode($result,JSON_UNESCAPED_UNICODE);
+        $query2="Create view WishList as SELECT distinct company,model,location,car_num,type,distance_driven FROM db_project.rentcar as rentcar NATURAL JOIN db_project.company as company where rentcar.model='".$model2."' and rentcar.rentcarcol='".$carcol2."'";
+
+        $stmt2 = $db->prepare($query2);
+        $stmt2->execute(array($model2,$carcol2));
+        $result = $stmt2->fetchAll(PDO::FETCH_NUM);
+        echo $query2;
+    }else{
+        $query0="DROP VIEW db_project.WishList;";
+        $stmt0 = $db->prepare($query0);
+        $stmt0->execute();
+        $result = $stmt0->fetchAll(PDO::FETCH_NUM);
+
+        $model1=$json_data['model'];
+        $carcol1=$json_data['carcol'];
+
+        $query1="Create view WishList as SELECT distinct company,model,location,car_num,type,distance_driven FROM db_project.rentcar as rentcar NATURAL JOIN db_project.company as company where rentcar.model='".$model1."' and rentcar.rentcarcol='".$carcol1."'";
+        $stmt1 = $db->prepare($query1);
+        $stmt1->execute();
+        $result = $stmt1->fetchAll(PDO::FETCH_NUM);
+        echo $query1;
     }
 
 } catch
